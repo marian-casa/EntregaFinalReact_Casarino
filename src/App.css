@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+
+.navbar-categria{
+  font-size: 1.3rem;
+}
+
+.saludo{
+  margin-top: 7rem;
+}
+
+.contenedor-carrito{
+  color: black;
+}
