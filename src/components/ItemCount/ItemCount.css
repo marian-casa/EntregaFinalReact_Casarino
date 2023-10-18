@@ -1,0 +1,38 @@
+.Counter {
+    font-size: 1.5rem;
+    
+}
+
+.Controls {
+    display: flex;
+    justify-content: center;
+    column-gap: 2rem;
+    /* height: 2rem; */
+}
+
+.Button{
+    background-color: #ee6e73;
+    height: 3rem;
+    width: 2rem;
+    border-radius: .5rem;
+    border: 0;
+}
+
+.Add-Button{
+    background-color: #ee6e73;
+    /* height: 2rem; */
+    border: 0;
+}
+
+.add-button{
+    background-color: #ee6e73;
+    color: black;
+    border-radius: .3rem;
+    margin: .5rem;
+}
+
+.Number {
+    height: 2rem;
+    margin-bottom: 1rem;
+    color: black;
+}
