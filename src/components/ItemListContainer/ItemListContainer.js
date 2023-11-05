@@ -1,41 +1,58 @@
-import { useState, useEffect } from "react";
-import ItemList from "../ItemList/ItemList";
-import { getProductos, getProductsByCategory } from "../../asyncMock";
-import { useParams } from "react-router-dom";
-import "./ItemListContainer.css"
+import { useEffect, useState } from 'react';
+import './ItemsListContainer.css';
+import ItemList from '../ItemList/ItemLits';
+import { useParams } from 'react-router-dom';
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../firebase/Config';
 
 
 
-function ItemListContainer ({greeting}){
+const ItemListContainer = ({ greeting }) => {
 
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true)
+    const { categoryId } = useParams()
 
-    const { categoryId } = useParams();
+    useEffect(() =>{
+        const collectionRef = collection(db, 'products');
 
-    console.log("La categoria que llego aca es:", categoryId)
+        const q = categoryId ? query(collectionRef, where("category", "==", categoryId)) : collectionRef;
 
-    //Con el useEffect hago el llamado a la API o en este caso el asyncMock:
-    useEffect(()=>{
+        getDocs(q)
+        .then((response)=>{
 
-        const asyncFunc = categoryId ? getProductsByCategory : getProductos
+            setProducts(
+                response.docs.map((doc)=>{
+                    return {...doc.data(), id: doc.id}
+                })
+            )
+        })
+    }, [categoryId])
 
-        asyncFunc(categoryId)
-            .then(response => {
-                setProducts(response);
-            })
-            .catch(error => {
-                console.error(error)
-            })
-    },[categoryId]) //El segundo parametro con un array vacio significa que solo se va a ejecutar cuando se renderize por primera vez
-    //Fin del useEffect
+        
+        
 
 
-    return(
-        <div className="ItemListContainer">
-            <h1>{greeting}</h1>
-            <ItemList products={products}/>
+
+    
+
+    return (
+        <div className="Title-S">
+
+            <h1 className="Title">{greeting} </h1>
+
+
+
+            <section className='TitleContainer'>
+                <ItemList products={products} />
+
+            </section>
+
+
         </div>
+
     )
+
 
 }
 
